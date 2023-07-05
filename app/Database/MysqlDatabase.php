@@ -29,8 +29,11 @@ class MysqlDatabase implements DatabaseEntity{
         $db_password = $_ENV['DB_PASSWORD'];
         $db_name = $_ENV['DB_DATABASE'];
         $dsn = 'mysql:dbname=' . $db_name . ';host=' . $db_host; 
-
-        $this->pdo = new PDO($dsn, $db_user, $db_password);
+        try{
+            $this->pdo = new PDO($dsn, $db_user, $db_password);
+        }catch(PDOException $e){
+            echo $e->getMessage();
+        } 
     }
 
     public function get($modelName, $id): array{
